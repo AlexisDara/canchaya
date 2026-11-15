@@ -179,7 +179,7 @@ El campo `regla` apunta al número de `docs/SPEC.md`.
 npm test
 ```
 
-51 tests automáticos con el ejecutor de Node, sin dependencias ni base de datos. Los de API levantan un servidor real en un puerto libre. Detalle y cobertura por regla en `INFORME_DE_PRUEBAS.md`.
+53 tests automáticos con el ejecutor de Node, sin dependencias ni base de datos. Los de API levantan un servidor real en un puerto libre. Detalle y cobertura por regla en `INFORME_DE_PRUEBAS.md`.
 
 ### Pruebas en navegador (opcionales)
 

@@ -119,7 +119,7 @@ Las 14 reglas (RN-01 a RN-14) están redactadas en [`SPEC.md`](SPEC.md), que es 
 | Integridad | Nunca debe haber dos reservas activas en el mismo turno | Verificación en el servicio y además índice único parcial en la base de datos |
 | Usabilidad | Se usa desde el celular y desde la computadora | Diseño responsive; mensajes de error en español con el número de regla |
 | Mantenibilidad | Las reglas se pueden cambiar sin tocar HTTP ni SQL | Arquitectura en capas (http, servicios, repositorios) |
-| Calidad | Cada regla está verificada | 51 tests automáticos; cada regla tiene al menos un test que la cita |
+| Calidad | Cada regla está verificada | 53 tests automáticos; cada regla tiene al menos un test que la cita |
 | Portabilidad | Se puede levantar sin base de datos para desarrollo | Repositorio en memoria intercambiable con el de PostgreSQL |
 | Zona horaria | Los horarios son los de Buenos Aires | Se calcula siempre con UTC-3 (sin horario de verano), probado en `tiempo.test.js` |
 | Disponibilidad | El servicio debe estar accesible por internet | Despliegue en Render, Netlify y Neon (pendiente de completar) |
@@ -222,7 +222,7 @@ Decisiones de diseño y su razón:
 | Decisión | Razón |
 |---|---|
 | Capas http, servicios y repositorios | Cada una tiene una sola responsabilidad: las reglas se pueden probar sin servidor ni base de datos |
-| Repositorio en memoria además del de PostgreSQL | Permite correr los 51 tests en segundos y sin infraestructura |
+| Repositorio en memoria además del de PostgreSQL | Permite correr los 53 tests en segundos y sin infraestructura |
 | La hora actual se pasa como parámetro a las reglas | Los tests son repetibles: no dependen del día en que se ejecutan |
 | Backend sin frameworks y con una sola dependencia (`pg`) | Menos superficie de ataque y menos cosas que mantener |
 | Contraseñas y tokens con el módulo `crypto` de Node | No hace falta instalar librerías externas |

@@ -5,7 +5,7 @@ Orden: base de datos (Neon) → backend (Render) → frontend (Netlify) → ajus
 ## 1. Base de datos en Neon (T13)
 
 1. Crear una cuenta en neon.tech y un proyecto nuevo.
-2. Copiar la cadena de conexión (`postgresql://usuario:clave@host/neondb?sslmode=require`). Es un secreto: no se sube al repositorio.
+2. Copiar la cadena de conexión (`postgresql://usuario:clave@host/neondb?sslmode=require`). Usá la conexión **directa** (en el panel de Neon, con la opción "Pooled connection" desactivada). Es un secreto: no se sube al repositorio.
 3. No hace falta cargar el esquema a mano: el backend ejecuta `db/schema.sql` al iniciar (es idempotente).
 
 ## 2. Backend en Render (T14)
@@ -23,6 +23,7 @@ Orden: base de datos (Neon) → backend (Render) → frontend (Netlify) → ajus
 | Variable | Valor |
 |---|---|
 | `NODE_ENV` | `production` |
+| `NODE_VERSION` | `22` |
 | `DATABASE_URL` | la cadena de Neon |
 | `TOKEN_SECRET` | una cadena larga y aleatoria (`node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`) |
 | `ADMIN_NAME` | nombre del administrador |

@@ -4,7 +4,7 @@
 
 | Tipo de prueba | Estado |
 |---|---|
-| Tests automáticos (reglas, API de punta a punta, repositorios) | **51 de 51 pasan** (`npm test`) |
+| Tests automáticos (reglas, API de punta a punta, repositorios) | **53 de 53 pasan** (`npm test`) |
 | Frontend en un navegador real (Chromium), contra el backend local | **15 casos OK, 1 no ejecutado** (sección 4.1) |
 | Pruebas manuales sobre el sistema desplegado en internet | **Pendientes** (sección 4.2; se completan al terminar T16) |
 | SQL contra una base PostgreSQL real (Neon) | **Pendiente** (casos M-15 y de la sección 4.2) |
@@ -57,6 +57,8 @@ Qué **no** se probó todavía: que el SQL de `db/schema.sql` y de `src/reposito
 ✔ otros errores de la base no se disfrazan de conflicto
 ✔ los datos del usuario viajan como parámetros y nunca dentro del texto SQL
 ✔ creadaEn se devuelve como texto ISO
+✔ RN-01: dos registros simultáneos con el mismo email: el segundo recibe 409
+✔ el pool tiene un manejador de errores para que una conexión inactiva cerrada no tire el servidor
 ✔ reserva válida: queda activa y a nombre del jugador
 ✔ RN-03: rechaza horas fuera del rango o no enteras
 ✔ validación: fecha inválida o cancha inexistente
@@ -73,9 +75,9 @@ Qué **no** se probó todavía: que el SQL de `db/schema.sql` y de `src/reposito
 ✔ inicioDelTurno convierte la hora de Buenos Aires (UTC-3) a un instante exacto
 ✔ fechaLocal: a las 22:00 de Buenos Aires sigue siendo el mismo día (no salta al siguiente por UTC)
 ✔ RN-06: diasDesdeHoy cuenta días calendario en hora de Buenos Aires
-ℹ tests 51
+ℹ tests 53
 ℹ suites 0
-ℹ pass 51
+ℹ pass 53
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
@@ -88,7 +90,7 @@ Cada regla de `docs/SPEC.md` tiene al menos un test que la cita por su número:
 
 | Regla | Qué verifica | Archivos de test |
 |---|---|---|
-| RN-01 | Registro: validaciones, email único sin distinguir mayúsculas, contraseña no expuesta | `auth.test.js`, `api.test.js` |
+| RN-01 | Registro: validaciones, email único sin distinguir mayúsculas (también con dos registros simultáneos), contraseña no expuesta | `auth.test.js`, `api.test.js`, `repositorio-postgres.test.js` |
 | RN-02 | Login, vencimiento del token a las 8 h, tokens manipulados, 401 sin sesión | `auth.test.js`, `api.test.js` |
 | RN-03 | Horas válidas de 9 a 22 | `reservar.test.js`, `tiempo.test.js` |
 | RN-04 | Sin turnos duplicados, incluso con dos pedidos simultáneos | `reservar.test.js`, `repositorio-memoria.test.js`, `repositorio-postgres.test.js`, `api.test.js` |
