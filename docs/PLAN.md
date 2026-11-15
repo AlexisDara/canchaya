@@ -7,7 +7,7 @@ Cada tarea se resuelve en un commit propio y se marca como hecha cuando está ve
 - [x] **T01** Estructura base del repositorio (`.gitignore`, `.env.example`, `package.json`).
 - [x] **T02** Spec con reglas numeradas, `AGENTS.md` y este plan.
 - [x] **T03** Errores y utilidades de tiempo (RN-03, RN-05, RN-06) con tests.
-- [ ] **T04** Repositorio en memoria.
+- [x] **T04** Repositorio en memoria.
 - [ ] **T05** Autenticación: registro y login (RN-01, RN-02) con tests.
 - [ ] **T06** Canchas y disponibilidad (RN-12, RN-13) con tests.
 - [ ] **T07** Crear reservas (RN-03 a RN-08) con tests.
