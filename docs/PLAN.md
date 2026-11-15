@@ -22,7 +22,7 @@ Cada tarea se resuelve en un commit propio y se marca como hecha cuando está ve
 - [ ] **T16** Probar el sistema desplegado y completar la sección manual del informe de pruebas.
 - [x] **T17** Relevamiento completo del proyecto (`docs/RELEVAMIENTO.md`).
 - [x] **T18** Manual de usuario y manual del administrador.
-- [ ] **T19** Manual técnico (instalación, API, despliegue, mantenimiento y resolución de problemas).
+- [x] **T19** Manual técnico (instalación, API, despliegue, mantenimiento y resolución de problemas).
 
 ## Orden y dependencias
 
