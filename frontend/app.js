@@ -7,6 +7,7 @@
     usuario: null,
     vista: "reservar",
     modoAuth: "login",
+    borrador: { nombre: "", email: "" }, // se conserva al fallar el formulario de acceso (la contraseña no)
     mensaje: null, // { tipo: "ok" | "error", texto, regla }
     canchas: [],
     canchaId: null,
@@ -63,7 +64,7 @@
   // ---------- sesión ----------
   function cerrarSesion(texto) {
     localStorage.removeItem("canchaya_token");
-    Object.assign(estado, { token: null, usuario: null, canchas: [], turnos: null, misReservas: null, todasReservas: null, vista: "reservar" });
+    Object.assign(estado, { token: null, usuario: null, canchas: [], turnos: null, misReservas: null, todasReservas: null, vista: "reservar", modoAuth: "login" });
     estado.mensaje = texto ? { tipo: "error", texto } : null;
     pintar();
   }
@@ -85,19 +86,21 @@
         onsubmit: async (ev) => {
           ev.preventDefault();
           const d = Object.fromEntries(new FormData(ev.target));
+          estado.borrador = { nombre: d.nombre || "", email: d.email || "" };
           try {
             if (!esLogin) await api("/api/auth/registro", { metodo: "POST", cuerpo: d });
             await iniciarSesion(d.email, d.password);
             await cargarInicio();
+            estado.borrador = { nombre: "", email: "" };
           } catch (e) {
             avisar("error", e.mensaje, e.regla);
           }
           pintar();
         },
       },
-      !esLogin ? [el("label", { for: "nombre" }, "Nombre"), el("input", { id: "nombre", name: "nombre", required: true, minlength: 2, maxlength: 60 })] : null,
+      !esLogin ? [el("label", { for: "nombre" }, "Nombre"), el("input", { id: "nombre", name: "nombre", required: true, minlength: 2, maxlength: 60, value: estado.borrador.nombre })] : null,
       el("label", { for: "email" }, "Email"),
-      el("input", { id: "email", name: "email", type: "email", required: true, autocomplete: "email" }),
+      el("input", { id: "email", name: "email", type: "email", required: true, autocomplete: "email", value: estado.borrador.email }),
       el("label", { for: "password" }, "Contraseña (mínimo 8 caracteres)"),
       el("input", { id: "password", name: "password", type: "password", required: true, minlength: 8, autocomplete: esLogin ? "current-password" : "new-password" }),
       el("button", { class: "principal", type: "submit" }, esLogin ? "Entrar" : "Crear cuenta")
