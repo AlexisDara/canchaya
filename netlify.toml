@@ -1,0 +1,3 @@
+# Netlify publica solo la carpeta del frontend (HTML/CSS/JS estáticos, sin build).
+[build]
+  publish = "frontend"
