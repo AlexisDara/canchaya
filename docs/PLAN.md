@@ -26,6 +26,7 @@ Cada tarea se resuelve en un commit propio y se marca como hecha cuando está ve
 - [x] **T20** Prueba del frontend en un navegador real (script `e2e/navegador.js`) y corrección de los dos errores que encontró.
 - [x] **T21** Capturas de pantalla, resultados de las pruebas en navegador en el informe y manuales con imágenes.
 - [x] **T22** Integración continua (GitHub Actions) y plano de despliegue para Render (`render.yaml`).
+- [x] **T23** Documento único en PDF con todas las capturas y el diagrama entidad-relación (`docs/Documentacion_completa_CanchaYa.pdf`).
 
 ## Orden y dependencias
 

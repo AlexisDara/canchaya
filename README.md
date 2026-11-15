@@ -14,6 +14,7 @@ Proyecto final de Generación T. Tiene reglas de negocio reales (anti-duplicados
 | [`docs/MANUAL_DE_USUARIO.md`](docs/MANUAL_DE_USUARIO.md) | Manual para jugadores |
 | [`docs/MANUAL_DEL_ADMINISTRADOR.md`](docs/MANUAL_DEL_ADMINISTRADOR.md) | Manual para el personal del club |
 | [`docs/MANUAL_TECNICO.md`](docs/MANUAL_TECNICO.md) | Instalación, API, mantenimiento y resolución de problemas |
+| [`docs/Documentacion_completa_CanchaYa.pdf`](docs/Documentacion_completa_CanchaYa.pdf) | Relevamiento y los tres manuales en un solo PDF, con capturas |
 | [`docs/SPEC.md`](docs/SPEC.md) | Especificación con las reglas de negocio numeradas (RN-01 a RN-14) |
 | [`docs/PLAN.md`](docs/PLAN.md) | Plan de tareas (una por commit) y checklist de entrega |
 | [`docs/INFORME_DE_PRUEBAS.md`](docs/INFORME_DE_PRUEBAS.md) | Resultados de los tests y pruebas manuales |
