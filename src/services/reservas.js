@@ -1,9 +1,10 @@
 // Reglas RN-03 a RN-08 (crear reservas), RN-09 a RN-11 (cancelar) y RN-14 (listados).
-const { validacion, prohibido, noEncontrado, conflicto, reglaNegocio, ErrorApp } = require("../lib/errores");
+const { validacion, prohibido, noEncontrado, conflicto, reglaNegocio } = require("../lib/errores");
 const { parsearFecha, esHoraDeTurnoValida, inicioDelTurno, diasDesdeHoy, MS_POR_HORA } = require("../lib/tiempo");
 
 const MAX_RESERVAS_ACTIVAS_FUTURAS = 3; // RN-07
 const MAX_DIAS_ANTICIPACION = 14; // RN-06
+const HORAS_MINIMAS_PARA_CANCELAR = 2; // RN-09
 
 function crearServicioReservas({ repo, ahora }) {
   const esFuturaYActiva = (r) => r.estado === "activa" && inicioDelTurno(r.fecha, r.hora) > ahora();
@@ -38,7 +39,45 @@ function crearServicioReservas({ repo, ahora }) {
     return repo.crearReserva({ usuarioId: actor.id, canchaId, fecha, hora });
   }
 
-  return { reservar };
+  // Agrega datos útiles para mostrar: nombre de la cancha, instante de inicio y si todavía se puede cancelar.
+  async function enriquecer(lista) {
+    const nombres = new Map((await repo.listarCanchas()).map((c) => [c.id, c.nombre]));
+    return lista
+      .map((r) => {
+        const inicio = inicioDelTurno(r.fecha, r.hora);
+        const puedeCancelar = r.estado === "activa" && inicio.getTime() - ahora().getTime() >= HORAS_MINIMAS_PARA_CANCELAR * MS_POR_HORA;
+        return { ...r, canchaNombre: nombres.get(r.canchaId) ?? "", inicio: inicio.toISOString(), puedeCancelar };
+      })
+      .sort((a, b) => a.inicio.localeCompare(b.inicio));
+  }
+
+  async function cancelar(actor, id) {
+    const reserva = await repo.buscarReservaPorId(id);
+    if (!reserva) throw noEncontrado("La reserva no existe");
+    if (actor.rol !== "admin" && reserva.usuarioId !== actor.id) {
+      throw prohibido("Solo podés cancelar tus propias reservas", "RN-10");
+    }
+    if (reserva.estado === "cancelada") throw conflicto("La reserva ya estaba cancelada", "RN-11");
+    const faltaMs = inicioDelTurno(reserva.fecha, reserva.hora).getTime() - ahora().getTime();
+    if (faltaMs < HORAS_MINIMAS_PARA_CANCELAR * MS_POR_HORA) {
+      throw reglaNegocio(`Solo se puede cancelar hasta ${HORAS_MINIMAS_PARA_CANCELAR} horas antes del turno`, "RN-09");
+    }
+    const cancelada = await repo.cancelarReserva(id);
+    return (await enriquecer([cancelada]))[0];
+  }
+
+  // RN-14: el jugador ve solo las suyas.
+  async function misReservas(actor) {
+    return enriquecer(await repo.listarReservasDeUsuario(actor.id));
+  }
+
+  // RN-14: solo el admin ve todas.
+  async function todas(actor) {
+    if (actor.rol !== "admin") throw prohibido("Solo un administrador puede ver todas las reservas", "RN-14");
+    return enriquecer(await repo.listarTodasLasReservas());
+  }
+
+  return { reservar, cancelar, misReservas, todas };
 }
 
 module.exports = { crearServicioReservas, MAX_RESERVAS_ACTIVAS_FUTURAS, MAX_DIAS_ANTICIPACION };
