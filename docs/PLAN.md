@@ -10,7 +10,7 @@ Cada tarea se resuelve en un commit propio y se marca como hecha cuando está ve
 - [x] **T04** Repositorio en memoria.
 - [x] **T05** Autenticación: registro y login (RN-01, RN-02) con tests.
 - [x] **T06** Canchas y disponibilidad (RN-12, RN-13) con tests.
-- [ ] **T07** Crear reservas (RN-03 a RN-08) con tests.
+- [x] **T07** Crear reservas (RN-03 a RN-08) con tests.
 - [ ] **T08** Cancelar y listar reservas (RN-09, RN-10, RN-11, RN-14) con tests.
 - [ ] **T09** API HTTP: rutas, CORS, límite de cuerpo y tests de punta a punta.
 - [ ] **T10** Repositorio PostgreSQL y esquema SQL.
