@@ -10,6 +10,10 @@ Orden: base de datos (Neon) → backend (Render) → frontend (Netlify) → ajus
 
 ## 2. Backend en Render (T14)
 
+**Opción rápida:** el repositorio incluye `render.yaml`. En Render: New → Blueprint → elegir el repositorio. Render crea el servicio con la configuración de abajo, genera `TOKEN_SECRET` solo y te pide `DATABASE_URL`, `CORS_ORIGIN`, `ADMIN_EMAIL` y `ADMIN_PASSWORD`. (Este archivo no pudo probarse contra Render; si algo no coincide, usá la configuración manual.)
+
+**Configuración manual:**
+
 1. En Render: New → Web Service → conectar este repositorio de GitHub.
 2. Configuración:
    - Runtime: Node. Build Command: `npm install`. Start Command: `npm start`.
