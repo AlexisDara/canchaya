@@ -29,6 +29,7 @@ Cada tarea se resuelve en un commit propio y se marca como hecha cuando está ve
 - [x] **T23** Documento único en PDF con todas las capturas y el diagrama entidad-relación (`docs/Documentacion_completa_CanchaYa.pdf`).
 - [x] **T24** Revisión final del código: manejo de errores del pool de Postgres, carrera en el registro con el mismo email y aviso de CORS abierto.
 - [x] **T25** `AGENTS.md` con el formato del curso y subagente `revisor` en `.cursor/agents/`.
+- [x] **T26** PDF de documentación actualizado con los cambios de la revisión final.
 
 ## Orden y dependencias
 
