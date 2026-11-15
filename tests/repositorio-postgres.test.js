@@ -49,3 +49,28 @@ test("creadaEn se devuelve como texto ISO", async () => {
   const repo = crearRepositorioPostgres("x", { pool });
   assert.equal((await repo.buscarReservaPorId(1)).creadaEn, "2026-11-10T18:00:00.000Z");
 });
+
+test("RN-01: dos registros simultáneos con el mismo email: el segundo recibe 409", async () => {
+  const pool = poolFalso(() => {
+    throw Object.assign(new Error("duplicate key"), { code: "23505" });
+  });
+  const repo = crearRepositorioPostgres("x", { pool });
+  await assert.rejects(
+    repo.crearUsuario({ nombre: "Ana", email: "ana@mail.com", passwordHash: "h", rol: "jugador" }),
+    (e) => e.estado === 409 && e.regla === "RN-01"
+  );
+});
+
+test("el pool tiene un manejador de errores para que una conexión inactiva cerrada no tire el servidor", () => {
+  const escuchas = {};
+  const pool = { ...poolFalso(), on: (evento, fn) => (escuchas[evento] = fn) };
+  crearRepositorioPostgres("x", { pool });
+  assert.equal(typeof escuchas.error, "function");
+  const original = console.error;
+  console.error = () => {};
+  try {
+    assert.doesNotThrow(() => escuchas.error(new Error("terminating connection")));
+  } finally {
+    console.error = original;
+  }
+});

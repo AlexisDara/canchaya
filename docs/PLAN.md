@@ -27,6 +27,8 @@ Cada tarea se resuelve en un commit propio y se marca como hecha cuando está ve
 - [x] **T21** Capturas de pantalla, resultados de las pruebas en navegador en el informe y manuales con imágenes.
 - [x] **T22** Integración continua (GitHub Actions) y plano de despliegue para Render (`render.yaml`).
 - [x] **T23** Documento único en PDF con todas las capturas y el diagrama entidad-relación (`docs/Documentacion_completa_CanchaYa.pdf`).
+- [x] **T24** Revisión final del código: manejo de errores del pool de Postgres, carrera en el registro con el mismo email y aviso de CORS abierto.
+- [x] **T25** `AGENTS.md` con el formato del curso y subagente `revisor` en `.cursor/agents/`.
 
 ## Orden y dependencias
 

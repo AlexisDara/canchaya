@@ -11,6 +11,10 @@ async function main() {
     console.warn("Aviso: TOKEN_SECRET no está definido. Usando un secreto de desarrollo (no usar en producción).");
   }
 
+  if (produccion && !process.env.CORS_ORIGIN) {
+    console.warn("Aviso: CORS_ORIGIN no está definido; se acepta cualquier origen. Configurá la URL del frontend.");
+  }
+
   let repo;
   if (process.env.DATABASE_URL) {
     repo = require("./repositories/postgres").crearRepositorioPostgres(process.env.DATABASE_URL);

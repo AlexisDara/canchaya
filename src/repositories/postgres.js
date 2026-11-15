@@ -16,7 +16,14 @@ function crearRepositorioPostgres(cadenaConexion, opciones = {}) {
     pool = new Pool({
       connectionString: cadenaConexion,
       ssl: process.env.PGSSL === "disable" ? false : { rejectUnauthorized: false },
+      max: 5, // el plan gratuito de Neon admite pocas conexiones
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 10000,
     });
+  }
+  // Neon corta las conexiones inactivas. Sin este manejador, ese aviso tiraría abajo todo el proceso.
+  if (typeof pool.on === "function") {
+    pool.on("error", (e) => console.error("Conexión inactiva de la base cerrada:", e.message));
   }
   const unica = async (texto, valores) => (await pool.query(texto, valores)).rows[0] ?? null;
   const todas = async (texto, valores) => (await pool.query(texto, valores)).rows;
@@ -29,11 +36,18 @@ function crearRepositorioPostgres(cadenaConexion, opciones = {}) {
     },
 
     // Usuarios
-    crearUsuario: ({ nombre, email, passwordHash, rol }) =>
-      unica(
-        `INSERT INTO usuarios (nombre, email, password_hash, rol) VALUES ($1, $2, $3, $4) RETURNING ${COLUMNAS_USUARIO}`,
-        [nombre, email, passwordHash, rol]
-      ),
+    async crearUsuario({ nombre, email, passwordHash, rol }) {
+      try {
+        return await unica(
+          `INSERT INTO usuarios (nombre, email, password_hash, rol) VALUES ($1, $2, $3, $4) RETURNING ${COLUMNAS_USUARIO}`,
+          [nombre, email, passwordHash, rol]
+        );
+      } catch (e) {
+        // Dos registros simultáneos con el mismo email: gana uno y el otro recibe un conflicto (RN-01).
+        if (e.code === "23505") throw conflicto("Ya existe un usuario con ese email", "RN-01");
+        throw e;
+      }
+    },
     buscarUsuarioPorEmail: (email) => unica(`SELECT ${COLUMNAS_USUARIO} FROM usuarios WHERE email = $1`, [email]),
     buscarUsuarioPorId: (id) => unica(`SELECT ${COLUMNAS_USUARIO} FROM usuarios WHERE id = $1`, [id]),
 
