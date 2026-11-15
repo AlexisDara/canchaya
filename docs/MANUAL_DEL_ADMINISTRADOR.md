@@ -27,6 +27,8 @@ Recomendaciones:
 
 Entrá a **Administración**. La tarjeta **Canchas** muestra todas las canchas con su estado (**Activa** o **Desactivada**).
 
+![Pantalla de administración](capturas/06-administracion.png)
+
 ### 3.1 Crear una cancha
 1. En **Nombre de la nueva cancha**, escribí el nombre (de 2 a 40 caracteres, por ejemplo "Cancha 4").
 2. Tocá **Crear cancha**. La cancha se crea activa y aparece en la lista y en la pantalla de reservas.

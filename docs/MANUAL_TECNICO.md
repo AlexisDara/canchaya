@@ -181,7 +181,19 @@ npm test
 
 51 tests automáticos con el ejecutor de Node, sin dependencias ni base de datos. Los de API levantan un servidor real en un puerto libre. Detalle y cobertura por regla en `INFORME_DE_PRUEBAS.md`.
 
-Lo que los tests **no** cubren: la validez del SQL contra PostgreSQL real y el frontend en un navegador. Se prueban a mano siguiendo la tabla del informe.
+### Pruebas en navegador (opcionales)
+
+El script `e2e/navegador.js` abre un Chromium real, recorre la aplicación como lo haría un usuario (registro, reservas, cancelaciones, administración, pantalla de celular) y guarda capturas en `docs/capturas/`. No forma parte de `npm test` porque necesita Playwright.
+
+```bash
+# Terminal 1: backend recién iniciado (la base en memoria debe estar vacía)
+ADMIN_EMAIL=admin@club.com ADMIN_PASSWORD=admin-clave-123 PORT=3000 node src/index.js
+# Terminal 2: instalar Playwright una vez y ejecutar
+npm install --no-save playwright && npx playwright install chromium
+node e2e/navegador.js
+```
+
+Lo que las pruebas automáticas **no** cubren: la validez del SQL contra PostgreSQL real y el sistema ya publicado. Esas pruebas se hacen a mano siguiendo la tabla del informe.
 
 ## 8. Despliegue
 

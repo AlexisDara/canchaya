@@ -58,6 +58,8 @@ npm test
 
 Ejecuta los tests automáticos (reglas de negocio, API de punta a punta y repositorios). No necesita base de datos.
 
+También hay una prueba opcional en navegador real (`e2e/navegador.js`, ver `docs/MANUAL_TECNICO.md`).
+
 ## Endpoints
 
 | Método | Ruta | Descripción |

@@ -4,12 +4,14 @@
 
 | Tipo de prueba | Estado |
 |---|---|
-| Tests automáticos (reglas, API de punta a punta, repositorios) | **51 de 51 pasan** (ejecutados con `npm test`) |
-| Pruebas manuales sobre el sistema desplegado en internet | **Pendientes** (sección 4; se completan al terminar T16) |
-| Frontend en un navegador real | **Pendiente** (sección 4) |
-| SQL contra una base PostgreSQL real (Neon) | **Pendiente** (sección 4) |
+| Tests automáticos (reglas, API de punta a punta, repositorios) | **51 de 51 pasan** (`npm test`) |
+| Frontend en un navegador real (Chromium), contra el backend local | **15 casos OK, 1 no ejecutado** (sección 4.1) |
+| Pruebas manuales sobre el sistema desplegado en internet | **Pendientes** (sección 4.2; se completan al terminar T16) |
+| SQL contra una base PostgreSQL real (Neon) | **Pendiente** (casos M-15 y de la sección 4.2) |
 
-Qué se probó automáticamente: todas las reglas de negocio (RN-01 a RN-14), las rutas HTTP con un servidor real y el manejo de errores. Qué **no** cubren los tests automáticos: que el SQL de `db/schema.sql` y de `src/repositories/postgres.js` sea válido en PostgreSQL, y que el frontend funcione en un navegador. Por eso esas pruebas se hacen a mano sobre el despliegue.
+Qué se probó: todas las reglas de negocio (RN-01 a RN-14), las rutas HTTP con un servidor real y el uso completo de la aplicación desde un navegador (registro, reservas, cancelaciones, administración, celular).
+
+Qué **no** se probó todavía: que el SQL de `db/schema.sql` y de `src/repositories/postgres.js` sea válido en PostgreSQL real (las pruebas locales usan la base en memoria) y que el sistema funcione ya publicado en internet.
 
 ## 2. Cómo se ejecutaron
 
@@ -108,30 +110,53 @@ Cada regla de `docs/SPEC.md` tiene al menos un test que la cita por su número:
 - Un cuerpo de más de 100 KB se rechaza con 413 (`api.test.js`).
 - Un texto malicioso en lugar de un email no llega al SQL: viaja como parámetro (`repositorio-postgres.test.js`).
 
-## 4. Pruebas manuales sobre el sistema desplegado
+## 4. Pruebas manuales
 
-**Estado: pendiente.** Completar cuando estén publicados la base (Neon), el backend (Render) y el frontend (Netlify). Anotar en cada fila "OK" o "Falla" y, si falla, qué pasó.
+### 4.1 Pruebas en navegador real contra el backend local
+
+- **Fecha:** 12/11/2026. **Navegador:** Chromium 153 (Playwright). **Backend:** local, con base en memoria y las canchas de ejemplo.
+- **Cómo se ejecutaron:** con el script `e2e/navegador.js`, que abre el navegador, hace las acciones de un usuario real (escribir, tocar botones, aceptar confirmaciones) y verifica lo que se ve en pantalla. Se puede repetir (instrucciones al inicio del script).
+- **Resultado:** 15 de 15 casos ejecutados OK, sin errores de JavaScript en la consola. M-15 no se puede ejecutar sin PostgreSQL.
+
+| # | Caso | Resultado esperado | Local |
+|---|---|---|---|
+| M-01 | Abrir `/api/health` del backend | Responde `{"estado":"ok"}` | OK |
+| M-02 | Registrarse desde el frontend con un email nuevo | Entra a la pantalla de reservas y muestra el nombre | OK |
+| M-03 | Registrarse con la contraseña "1234" | El navegador no deja enviar el formulario (mínimo 8) | OK |
+| M-04 | Salir e ingresar con una contraseña incorrecta, y luego con la correcta | Mensaje "Email o contraseña incorrectos" y después entra | OK |
+| M-05 | Elegir cancha y la fecha de mañana | Se ven los 14 turnos | OK |
+| M-06 | Reservar el turno de las 18:00 | Mensaje de confirmación; el turno pasa a "Ocupado" | OK |
+| M-07 | Con otro usuario, mirar ese mismo turno | Aparece ocupado y no se puede tocar | OK |
+| M-08 | Reservar un tercer turno y luego un cuarto | La cuarta reserva da error RN-07 | OK |
+| M-09 | Cancelar una reserva desde "Mis reservas" | Queda "Cancelada" y el turno vuelve a estar libre | OK |
+| M-10 | Reservar un turno de hoy que empieza en menos de 2 h | No aparece el botón Cancelar (RN-09) | OK (turno de las 18:00 de hoy) |
+| M-11 | Como administrador: crear una cancha, desactivarla y ver todas las reservas | La cancha desactivada no la ve un jugador (RN-12) | OK |
+| M-12 | Como jugador, pedir `/api/reservas` con su token | Responde 403 (RN-14) | OK |
+| M-13 | Abrir la aplicación en pantalla de 375 px de ancho | Se adapta, sin scroll horizontal | OK |
+| M-14 | Recargar la página con la sesión iniciada | Sigue dentro de la aplicación | OK |
+| M-15 | Reiniciar el backend y volver a entrar | Las reservas anteriores siguen (están en la base) | **No ejecutado:** requiere PostgreSQL |
+
+El caso M-10 depende de la hora a la que se ejecuta: solo se puede probar cuando queda un turno de hoy a menos de 2 horas. La regla RN-09 también está cubierta por los tests automáticos (`cancelar.test.js`) con hora fija.
+
+Capturas de las pruebas: `docs/capturas/`.
+
+### 4.2 Pruebas sobre el sistema desplegado
+
+**Estado: pendiente.** Completar cuando estén publicados la base (Neon), el backend (Render) y el frontend (Netlify). Repetir los casos M-01 a M-15 de la tabla anterior (ahora sí M-15, con la base real) y anotar el resultado.
 
 Datos del despliegue: URL del frontend: `__________` · URL del backend: `__________` · Fecha de la prueba: `__________`
 
-| # | Caso | Resultado esperado | Resultado |
-|---|---|---|---|
-| M-01 | Abrir `/api/health` del backend | Responde `{"estado":"ok"}` | |
-| M-02 | Registrarse desde el frontend con un email nuevo | Entra a la pantalla de reservas | |
-| M-03 | Registrarse con la contraseña "1234" | Mensaje de error (RN-01) | |
-| M-04 | Cerrar sesión e ingresar con una contraseña incorrecta | Mensaje "Email o contraseña incorrectos" | |
-| M-05 | Elegir cancha y fecha de mañana | Se ven los 14 turnos | |
-| M-06 | Reservar el turno de las 18:00 | Mensaje de confirmación; el turno pasa a "Ocupado" | |
-| M-07 | Con otro usuario, intentar reservar ese mismo turno | El turno aparece ocupado; si se fuerza, error RN-04 | |
-| M-08 | Reservar otros 2 turnos y luego un cuarto | Error RN-07 | |
-| M-09 | Cancelar una reserva de mañana desde "Mis reservas" | Queda "Cancelada" y el turno vuelve a estar libre | |
-| M-10 | Reservar un turno que empieza en menos de 2 h e intentar cancelarlo | No aparece el botón Cancelar (RN-09) | |
-| M-11 | Ingresar como administrador: crear una cancha y desactivarla | La cancha desactivada no la ve un jugador (RN-12) | |
-| M-12 | Como jugador, abrir la consola del navegador y pedir `/api/reservas` | Responde 403 (RN-14) | |
-| M-13 | Abrir el frontend desde el celular | La pantalla se adapta y se puede reservar | |
-| M-14 | Recargar la página con la sesión iniciada | Sigue dentro de la app | |
-| M-15 | Reiniciar el backend en Render y volver a entrar | Las reservas anteriores siguen (están en la base) | |
+| Caso | Resultado en internet |
+|---|---|
+| M-01 a M-14 | |
+| M-15 (persistencia tras reiniciar el backend en Render) | |
+| Primera petición tras un rato de inactividad (el servicio gratuito "duerme") | Anotar cuánto tardó |
 
 ## 5. Problemas encontrados
 
-Ninguno hasta ahora en las pruebas automáticas. Las pruebas manuales (sección 4) pueden agregar hallazgos; anotarlos acá.
+Las pruebas en navegador encontraron **dos errores del frontend**, que se corrigieron (commit T20) y se volvieron a probar:
+
+1. **Al cerrar sesión, la pantalla de acceso quedaba en el formulario de registro** en lugar del de ingreso. Corrección: al salir se vuelve a la pestaña "Ingresar".
+2. **Tras un intento de ingreso fallido se borraba el email escrito**, y la persona tenía que volver a tipearlo. Corrección: se conserva el email (no la contraseña) cuando el formulario devuelve un error.
+
+Ningún test automático podía detectar estos errores, porque son de la interfaz. Las pruebas sobre el sistema desplegado (sección 4.2) pueden agregar hallazgos: anotarlos acá.

@@ -23,6 +23,9 @@ Cada tarea se resuelve en un commit propio y se marca como hecha cuando está ve
 - [x] **T17** Relevamiento completo del proyecto (`docs/RELEVAMIENTO.md`).
 - [x] **T18** Manual de usuario y manual del administrador.
 - [x] **T19** Manual técnico (instalación, API, despliegue, mantenimiento y resolución de problemas).
+- [x] **T20** Prueba del frontend en un navegador real (script `e2e/navegador.js`) y corrección de los dos errores que encontró.
+- [x] **T21** Capturas de pantalla, resultados de las pruebas en navegador en el informe y manuales con imágenes.
+- [x] **T22** Integración continua (GitHub Actions) y plano de despliegue para Render (`render.yaml`).
 
 ## Orden y dependencias
 

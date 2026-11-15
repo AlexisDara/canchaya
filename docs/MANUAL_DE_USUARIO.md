@@ -27,13 +27,16 @@ CanchaYa te permite reservar canchas de pádel del club desde el celular o la co
 3. Completá **Nombre**, **Email** y **Contraseña** (mínimo 8 caracteres).
 4. Tocá **Crear cuenta**. Si todo está bien, entrás directo a la aplicación.
 
-> 📷 *Captura sugerida: pantalla de acceso con la pestaña "Registrarme".*
+![Pantalla de acceso con la pestaña Registrarme](capturas/02-registro.png)
 
 Si el email ya estaba registrado, el sistema te avisa. En ese caso usá la pestaña **Ingresar**.
 
 ## 4. Iniciar y cerrar sesión
 
 - **Ingresar:** en la pestaña **Ingresar**, escribí tu email y contraseña y tocá **Entrar**.
+
+![Pantalla de acceso](capturas/01-acceso.png)
+
 - **Salir:** tocá **Salir**, arriba a la derecha.
 - Tu sesión dura 8 horas. Pasado ese tiempo, o si cambiás de dispositivo, tenés que volver a ingresar.
 
@@ -56,7 +59,11 @@ Si te equivocás de email o contraseña, el sistema muestra "Email o contraseña
 6. El sistema te pregunta "¿Reservar Cancha X el dd/mm/aaaa a las HH:00?". Tocá **Aceptar**.
 7. Si todo salió bien, aparece un mensaje verde: "Reserva confirmada" y el horario pasa a **Ocupado**.
 
-> 📷 *Captura sugerida: grilla de horarios con turnos libres, ocupados y pasados.*
+![Grilla de horarios con turnos libres y ocupados](capturas/03-reservar.png)
+
+Si mirás el día de hoy, los horarios que ya pasaron aparecen en gris como **Pasado**:
+
+![Grilla de horarios del día de hoy, con turnos pasados](capturas/04-reservar-hoy.png)
 
 ## 6. Ver tus reservas
 
@@ -64,6 +71,8 @@ Entrá a la solapa **Mis reservas**. Ahí ves todas tus reservas ordenadas por f
 
 - **Activa:** la reserva está vigente.
 - **Cancelada:** la cancelaste (o la canceló el club) y el turno quedó libre.
+
+![Pantalla Mis reservas](capturas/05-mis-reservas.png)
 
 ## 7. Cancelar una reserva
 
@@ -73,7 +82,13 @@ Entrá a la solapa **Mis reservas**. Ahí ves todas tus reservas ordenadas por f
 
 Si faltan menos de 2 horas para el turno, el botón no aparece y se muestra "Ya no se puede cancelar (menos de 2 h)". En ese caso comunicate con el club.
 
-## 8. Mensajes de error frecuentes
+## 8. Desde el celular
+
+La aplicación se adapta a pantallas chicas: los horarios se acomodan en filas de tres y todo se maneja con el dedo.
+
+![Reservar desde el celular](capturas/07-movil-reservar.png)
+
+## 9. Mensajes de error frecuentes
 
 Cuando algo no se puede hacer, aparece un mensaje rojo con el motivo y, entre paréntesis, el código de la regla.
 
@@ -89,7 +104,7 @@ Cuando algo no se puede hacer, aparece un mensaje rojo con el motivo y, entre pa
 | "Tu sesión venció. Iniciá sesión de nuevo." | Pasaron más de 8 horas | Ingresá de nuevo |
 | "No se pudo conectar con el servidor..." | Sin internet o el servidor está despertando | Esperá un momento y reintentá |
 
-## 9. Preguntas frecuentes
+## 10. Preguntas frecuentes
 
 **¿Por qué al abrir la aplicación tarda tanto la primera vez?**
 El servidor puede estar "dormido" por falta de uso y tarda hasta un minuto en despertar. Después funciona con normalidad.
