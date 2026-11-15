@@ -14,7 +14,7 @@ Cada tarea se resuelve en un commit propio y se marca como hecha cuando está ve
 - [x] **T08** Cancelar y listar reservas (RN-09, RN-10, RN-11, RN-14) con tests.
 - [x] **T09** API HTTP: rutas, CORS, límite de cuerpo y tests de punta a punta.
 - [x] **T10** Repositorio PostgreSQL y esquema SQL.
-- [ ] **T11** Frontend completo (login, registro, reservar, mis reservas, administración).
+- [x] **T11** Frontend completo (login, registro, reservar, mis reservas, administración).
 - [ ] **T12** Informe de pruebas, README y guía de despliegue.
 - [ ] **T13** Crear la base de datos en Neon y cargar el esquema.
 - [ ] **T14** Publicar el backend en Render.

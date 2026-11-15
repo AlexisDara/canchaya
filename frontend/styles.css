@@ -1,0 +1,41 @@
+:root {
+  --verde: #0f766e; --verde-oscuro: #115e59; --fondo: #f3f6f5; --texto: #1f2937;
+  --borde: #d1d9d6; --libre: #dcfce7; --ocupado: #fee2e2; --pasado: #e5e7eb; --error: #b91c1c; --ok: #166534;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--fondo); color: var(--texto); }
+#app { max-width: 880px; margin: 0 auto; padding: 16px; }
+h1, h2, h3 { margin: 0 0 12px; }
+header.barra { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+header.barra .marca { font-size: 1.4rem; font-weight: 700; color: var(--verde-oscuro); }
+nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+nav button.activa { background: var(--verde-oscuro); color: #fff; }
+.tarjeta { background: #fff; border: 1px solid var(--borde); border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+.auth { max-width: 420px; margin: 40px auto; }
+label { display: block; font-size: .9rem; margin: 10px 0 4px; font-weight: 600; }
+input, select { width: 100%; padding: 10px; border: 1px solid var(--borde); border-radius: 8px; font-size: 1rem; }
+button { padding: 10px 14px; border: 1px solid var(--verde); background: #fff; color: var(--verde-oscuro); border-radius: 8px; font-size: 1rem; cursor: pointer; }
+button.principal { background: var(--verde); color: #fff; }
+button:disabled { cursor: not-allowed; opacity: .55; }
+form button { margin-top: 14px; }
+.pestanas { display: flex; gap: 8px; margin-bottom: 8px; }
+.pestanas button.activa { background: var(--verde-oscuro); color: #fff; }
+.fila { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 560px) { .fila { grid-template-columns: 1fr; } }
+.turnos { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; margin-top: 12px; }
+.turno { padding: 12px 6px; text-align: center; border-radius: 8px; border: 1px solid var(--borde); font-weight: 600; }
+.turno.libre { background: var(--libre); border-color: #86efac; cursor: pointer; }
+.turno.ocupado { background: var(--ocupado); border-color: #fca5a5; }
+.turno.pasado { background: var(--pasado); color: #6b7280; }
+.turno small { display: block; font-weight: 400; font-size: .75rem; }
+.mensaje { padding: 10px 12px; border-radius: 8px; margin-bottom: 12px; }
+.mensaje.error { background: #fee2e2; color: var(--error); }
+.mensaje.ok { background: #dcfce7; color: var(--ok); }
+.mensaje small { opacity: .8; }
+.item { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--borde); }
+.item:last-child { border-bottom: 0; }
+.etiqueta { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: .8rem; background: var(--pasado); }
+.etiqueta.activa { background: var(--libre); }
+.etiqueta.cancelada { background: var(--ocupado); }
+.vacio, .cargando { color: #6b7280; }
+.leyenda { font-size: .85rem; color: #6b7280; margin-top: 10px; }
