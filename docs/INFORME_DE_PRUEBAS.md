@@ -6,12 +6,12 @@
 |---|---|
 | Tests automáticos (reglas, API de punta a punta, repositorios) | **53 de 53 pasan** (`npm test`) |
 | Frontend en un navegador real (Chromium), contra el backend local | **15 casos OK, 1 no ejecutado** (sección 4.1) |
-| Pruebas manuales sobre el sistema desplegado en internet | **Pendientes** (sección 4.2; se completan al terminar T16) |
-| SQL contra una base PostgreSQL real (Neon) | **Pendiente** (casos M-15 y de la sección 4.2) |
+| Pruebas manuales sobre el sistema desplegado en internet | **6 casos OK** (sección 4.2) |
+| SQL contra una base PostgreSQL real (Neon) | **OK:** el esquema se creó y las reservas persisten tras reiniciar el backend (sección 4.2) |
 
 Qué se probó: todas las reglas de negocio (RN-01 a RN-14), las rutas HTTP con un servidor real y el uso completo de la aplicación desde un navegador (registro, reservas, cancelaciones, administración, celular).
 
-Qué **no** se probó todavía: que el SQL de `db/schema.sql` y de `src/repositories/postgres.js` sea válido en PostgreSQL real (las pruebas locales usan la base en memoria) y que el sistema funcione ya publicado en internet.
+Las pruebas locales usan la base en memoria; las pruebas contra Neon y el sistema publicado se hicieron a mano (sección 4.2).
 
 ## 2. Cómo se ejecutaron
 
@@ -144,15 +144,20 @@ Capturas de las pruebas: `docs/capturas/`.
 
 ### 4.2 Pruebas sobre el sistema desplegado
 
-**Estado: pendiente.** Completar cuando estén publicados la base (Neon), el backend (Render) y el frontend (Netlify). Repetir los casos M-01 a M-15 de la tabla anterior (ahora sí M-15, con la base real) y anotar el resultado.
+- **Fecha:** 18/11/2026
+- **Frontend:** https://canchaya-bqt9.netlify.app (Netlify). **Backend:** https://canchaya-api-9asl.onrender.com (Render). **Base de datos:** PostgreSQL en Neon.
+- Las pruebas se hicieron a mano desde un navegador, sobre el sistema publicado, con `CORS_ORIGIN` configurado con la URL de Netlify.
 
-Datos del despliegue: URL del frontend: `__________` · URL del backend: `__________` · Fecha de la prueba: `__________`
+| # | Caso | Resultado |
+|---|---|---|
+| 1 | Registrar un jugador con un email nuevo | OK |
+| 2 | Reservar una cancha para mañana a las 18:00 (el turno queda "Ocupado") | OK |
+| 3 | Cancelar la reserva desde "Mis reservas" (el turno vuelve a estar libre) | OK |
+| 4 | Ingresar como administrador y ver la solapa "Administración" | OK |
+| 5 | Crear una cancha, desactivarla y comprobar que el jugador no la ve | OK |
+| 6 | Reiniciar el backend en Render y comprobar que las reservas siguen (persistencia en Neon, caso M-15) | OK |
 
-| Caso | Resultado en internet |
-|---|---|
-| M-01 a M-14 | |
-| M-15 (persistencia tras reiniciar el backend en Render) | |
-| Primera petición tras un rato de inactividad (el servicio gratuito "duerme") | Anotar cuánto tardó |
+Nota: el servicio gratuito de Render se duerme tras un rato sin uso; la primera petición después de la inactividad puede tardar hasta un minuto (no se midió el tiempo exacto).
 
 ## 5. Problemas encontrados
 

@@ -16,10 +16,10 @@ Cada tarea se resuelve en un commit propio y se marca como hecha cuando está ve
 - [x] **T10** Repositorio PostgreSQL y esquema SQL.
 - [x] **T11** Frontend completo (login, registro, reservar, mis reservas, administración).
 - [x] **T12** Informe de pruebas, README y guía de despliegue.
-- [ ] **T13** Crear la base de datos en Neon y cargar el esquema.
-- [ ] **T14** Publicar el backend en Render.
-- [ ] **T15** Publicar el frontend en Netlify.
-- [ ] **T16** Probar el sistema desplegado y completar la sección manual del informe de pruebas.
+- [x] **T13** Crear la base de datos en Neon y cargar el esquema.
+- [x] **T14** Publicar el backend en Render.
+- [x] **T15** Publicar el frontend en Netlify.
+- [x] **T16** Probar el sistema desplegado y completar la sección manual del informe de pruebas.
 - [x] **T17** Relevamiento completo del proyecto (`docs/RELEVAMIENTO.md`).
 - [x] **T18** Manual de usuario y manual del administrador.
 - [x] **T19** Manual técnico (instalación, API, despliegue, mantenimiento y resolución de problemas).
@@ -40,9 +40,9 @@ T10 y T11 pueden hacerse después de T09. T13 a T16 son de despliegue y dependen
 
 - [x] Spec con cada regla numerada
 - [x] `AGENTS.md` con reglas para agentes
-- [ ] Todas las tareas marcadas como hechas
+- [x] Todas las tareas marcadas como hechas
 - [x] Todos los tests pasando
 - [x] Un commit por tarea
 - [x] Sin secretos en el repositorio (`.env` afuera)
 - [x] README
-- [ ] Link público funcionando
+- [x] Link público funcionando

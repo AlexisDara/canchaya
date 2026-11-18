@@ -122,7 +122,7 @@ Las 14 reglas (RN-01 a RN-14) están redactadas en [`SPEC.md`](SPEC.md), que es 
 | Calidad | Cada regla está verificada | 53 tests automáticos; cada regla tiene al menos un test que la cita |
 | Portabilidad | Se puede levantar sin base de datos para desarrollo | Repositorio en memoria intercambiable con el de PostgreSQL |
 | Zona horaria | Los horarios son los de Buenos Aires | Se calcula siempre con UTC-3 (sin horario de verano), probado en `tiempo.test.js` |
-| Disponibilidad | El servicio debe estar accesible por internet | Despliegue en Render, Netlify y Neon (pendiente de completar) |
+| Disponibilidad | El servicio debe estar accesible por internet | Despliegue en Render, Netlify y Neon (publicado) |
 
 No se establecieron metas numéricas de rendimiento (por ejemplo, tiempos de respuesta) y por eso tampoco se midieron.
 

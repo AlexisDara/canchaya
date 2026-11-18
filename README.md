@@ -4,7 +4,7 @@ Aplicación web para reservar canchas de pádel. Los jugadores se registran, ven
 
 Proyecto final de Generación T. Tiene reglas de negocio reales (anti-duplicados, límites por jugador, plazos de cancelación, permisos por rol), no es solo un sitio web.
 
-**Link público:** _pendiente de publicar_ (ver `docs/DEPLOY.md`)
+**Link público:** https://canchaya-bqt9.netlify.app (backend: https://canchaya-api-9asl.onrender.com)
 
 ## Documentación
 
